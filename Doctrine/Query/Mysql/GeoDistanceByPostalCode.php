@@ -5,6 +5,7 @@ namespace Craue\GeoBundle\Doctrine\Query\Mysql;
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
@@ -22,7 +23,10 @@ class GeoDistanceByPostalCode extends FunctionNode {
 	protected $countryDestination;
 	protected $postalCodeDestination;
 
-	public function parse(Parser $parser) : void {
+    /**
+     * @throws QueryException
+     */
+    public function parse(Parser $parser) : void {
 		$parser->match(Lexer::T_IDENTIFIER);
 		$parser->match(Lexer::T_OPEN_PARENTHESIS);
 		$this->countryOrigin = $parser->StringPrimary();

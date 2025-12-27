@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectRepository;
  */
 abstract class BaseGeonamesPostalCodeData implements FixtureInterface {
 
-	protected $batchSize = 1000;
+	protected int $batchSize = 1000;
 
 	// TODO remove as soon as doctrine/persistence >= 2.0 is required
 	protected final function _getRepository($manager) {
@@ -22,7 +22,8 @@ abstract class BaseGeonamesPostalCodeData implements FixtureInterface {
 	}
 
 	// TODO remove as soon as doctrine/persistence >= 2.0 is required
-	protected final function _clearPostalCodesTable($manager) {
+	protected final function _clearPostalCodesTable($manager): void
+    {
 		foreach ($this->_getRepository($manager)->findAll() as $entity) {
 			$manager->remove($entity);
 		}
@@ -30,7 +31,8 @@ abstract class BaseGeonamesPostalCodeData implements FixtureInterface {
 	}
 
 	// TODO remove as soon as doctrine/persistence >= 2.0 is required
-	protected final function _addEntries($manager, $filename) {
+	protected final function _addEntries($manager, $filename): int
+    {
 		$repo = $this->_getRepository($manager);
 
 		$entriesAdded = 0;
@@ -98,14 +100,16 @@ if (interface_exists(ObjectManager::class)) {
 		 * @param ObjectManager $manager
 		 * @return ObjectRepository
 		 */
-		protected function getRepository(ObjectManager $manager) {
+		protected function getRepository(ObjectManager $manager): ObjectRepository
+        {
 			return $this->_getRepository($manager);
 		}
 
 		/**
 		 * @param ObjectManager $manager
 		 */
-		protected function clearPostalCodesTable(ObjectManager $manager) {
+		protected function clearPostalCodesTable(ObjectManager $manager): void
+        {
 			$this->_clearPostalCodesTable($manager);
 		}
 
@@ -114,7 +118,8 @@ if (interface_exists(ObjectManager::class)) {
 		 * @param string $filename
 		 * @return int Number of entries actually added.
 		 */
-		protected function addEntries(ObjectManager $manager, $filename) {
+		protected function addEntries(ObjectManager $manager, $filename): int
+        {
 			return $this->_addEntries($manager, $filename);
 		}
 	}
@@ -129,14 +134,16 @@ if (interface_exists(ObjectManager::class)) {
 		 * @param LegacyObjectManager $manager
 		 * @return LegacyObjectRepository
 		 */
-		protected function getRepository(LegacyObjectManager $manager) {
+		protected function getRepository(LegacyObjectManager $manager): LegacyObjectRepository
+        {
 			return $this->_getRepository($manager);
 		}
 
 		/**
 		 * @param LegacyObjectManager $manager
 		 */
-		protected function clearPostalCodesTable(LegacyObjectManager $manager) {
+		protected function clearPostalCodesTable(LegacyObjectManager $manager): void
+        {
 			$this->_clearPostalCodesTable($manager);
 		}
 
@@ -145,7 +152,8 @@ if (interface_exists(ObjectManager::class)) {
 		 * @param string $filename
 		 * @return int Number of entries actually added.
 		 */
-		protected function addEntries(LegacyObjectManager $manager, $filename) {
+		protected function addEntries(LegacyObjectManager $manager, $filename): int
+        {
 			return $this->_addEntries($manager, $filename);
 		}
 	}

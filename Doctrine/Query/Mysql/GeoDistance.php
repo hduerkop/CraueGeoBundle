@@ -4,6 +4,7 @@ namespace Craue\GeoBundle\Doctrine\Query\Mysql;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Parser;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Query\SqlWalker;
 use Doctrine\ORM\Query\TokenType;
 
@@ -24,7 +25,10 @@ class GeoDistance extends FunctionNode {
 	protected $latDestination;
 	protected $lngDestination;
 
-	public function parse(Parser $parser) : void {
+    /**
+     * @throws QueryException
+     */
+    public function parse(Parser $parser) : void {
 		$parser->match(TokenType::T_IDENTIFIER);
 		$parser->match(TokenType::T_OPEN_PARENTHESIS);
 		$this->latOrigin = $parser->ArithmeticExpression();
@@ -56,7 +60,8 @@ class GeoDistance extends FunctionNode {
 		);
 	}
 
-	protected function getSqlWithPlaceholders() {
+	protected function getSqlWithPlaceholders(): string
+    {
 		return '%s * ASIN(SQRT(POWER(SIN((%s - %s) * PI()/360), 2) + COS(%s * PI()/180) * COS(%s * PI()/180) * POWER(SIN((%s - %s) * PI()/360), 2)))';
 	}
 
