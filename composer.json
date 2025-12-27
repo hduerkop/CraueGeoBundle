@@ -24,7 +24,6 @@
 		"symfony/framework-bundle": "^8"
 	},
 	"require-dev": {
-		"doctrine/annotations": "^2.0.2",
 		"doctrine/data-fixtures": "^2.2.0",
 		"doctrine/dbal": "^4.4.1",
 		"doctrine/doctrine-fixtures-bundle": "^4",
